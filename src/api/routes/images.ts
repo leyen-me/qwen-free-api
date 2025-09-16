@@ -12,8 +12,15 @@ export default {
       request
         .validate("body.prompt", _.isString)
         .validate("headers.authorization", _.isString);
+      // 获取 authorization header，不存在则使用环境变量
+      const authHeader = request.headers.authorization;
+      const rawToken = authHeader || process.env.AUTHORIZATION_TOKEN;
+
+      if (!rawToken) {
+        throw new Error("Authorization token is required");
+      }
       // refresh_token切分
-      const tokens = chat.tokenSplit(request.headers.authorization);
+      const tokens = chat.tokenSplit(rawToken);
       // 随机挑选一个refresh_token
       const token = _.sample(tokens);
       const prompt = request.body.prompt;
