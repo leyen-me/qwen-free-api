@@ -15,7 +15,6 @@ export default {
           (v) => _.isUndefined(v) || _.isString(v)
         )
         .validate("body.messages", _.isArray)
-        .validate("headers.authorization", _.isString);
 
       // 获取 authorization header，不存在则使用环境变量
       const authHeader = request.headers.authorization;

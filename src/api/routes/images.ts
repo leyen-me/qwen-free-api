@@ -11,7 +11,7 @@ export default {
     "/generations": async (request: Request) => {
       request
         .validate("body.prompt", _.isString)
-        .validate("headers.authorization", _.isString);
+      
       // 获取 authorization header，不存在则使用环境变量
       const authHeader = request.headers.authorization;
       const rawToken = authHeader || process.env.AUTHORIZATION_TOKEN;
